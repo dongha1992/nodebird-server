@@ -1,4 +1,4 @@
-moudule.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Hashtag = sequelize.define(
     "Hashtag",
     {
@@ -7,11 +7,11 @@ moudule.exports = (sequelize, DataTypes) => {
     {
       // mb4 -> 이모지 허용
       charset: "utf8mb4",
-      collate: "utf8_general_ci",
+      collate: "utf8mb4_general_ci",
     }
   );
   Hashtag.associate = (db) => {
-    db.Hashtag.belongsToMany(db.Post);
+    db.Hashtag.belongsToMany(db.Post, { through: "PostHashtag" });
   };
   return Hashtag;
 };

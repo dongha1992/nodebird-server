@@ -1,4 +1,4 @@
-moudule.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define(
     "Comment",
     {
@@ -7,7 +7,7 @@ moudule.exports = (sequelize, DataTypes) => {
     {
       // mb4 -> 이모지 허용
       charset: "utf8mb4",
-      collate: "utf8_general_ci",
+      collate: "utf8mb4_general_ci",
     }
   );
   Comment.associate = (db) => {

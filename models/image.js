@@ -1,4 +1,4 @@
-moudule.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Image = sequelize.define(
     "Image",
     {
@@ -6,7 +6,7 @@ moudule.exports = (sequelize, DataTypes) => {
     },
     {
       // mb4 -> 이모지 허용
-      charset: "utf8m",
+      charset: "utf8",
       collate: "utf8_general_ci",
     }
   );
