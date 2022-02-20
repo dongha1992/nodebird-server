@@ -5,6 +5,8 @@ const passport = require("passport");
 
 const { User } = require("../models");
 
+router.get("/", async (req, res, next) => {});
+
 router.post("/signup", async (req, res, next) => {
   const { email, password, nickname } = req.body;
 
@@ -51,6 +53,12 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-router.delete("/", (req, res) => {});
+router.post("/logout", (req, res) => {});
+
+router.patch();
+
+router.patch();
+
+router.delete();
 
 module.exports = router;

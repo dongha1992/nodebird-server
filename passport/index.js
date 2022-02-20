@@ -9,6 +9,12 @@ module.exports = () => {
 
   passport.deserializeUser(async (id, done) => {
     try {
-    } catch (error) {}
+      const user = await User.find({ where: id });
+      done(null, user);
+    } catch (error) {
+      console.error(error);
+      done(error);
+    }
   });
+  local();
 };
