@@ -34,11 +34,18 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
+      console.error(err);
+      return next(err);
     }
     if (info) {
+      return res.status(401).info(info.reason);
     }
-    // server login success 후 passport 에러
+    // server login success 후 passport 검사
     return req.login(user, async (loginErr) => {
+      if (loginErr) {
+        console.error(loginErr);
+        return next(loginErr);
+      }
       return res.status(200).json();
     });
   })(req, res, next);
