@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 
-const { User } = require("../models");
+const { User, Post } = require("../models");
 
 router.get("/", async (req, res, next) => {});
 
@@ -40,25 +40,40 @@ router.post("/login", (req, res, next) => {
       return next(err);
     }
     if (info) {
-      return res.status(401).info(info.reason);
+      return res.status(401).send(info.reason);
     }
     // server login success 후 passport 검사
+
     return req.login(user, async (loginErr) => {
       if (loginErr) {
         console.error(loginErr);
         return next(loginErr);
       }
-      return res.status(200).json();
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: user.id },
+        attributes: {
+          excludes: ["password"],
+        },
+        includes: [
+          {
+            model: Post,
+            attributes: ["id"],
+          },
+          { model: User, as: "Follwings", attributes: ["id"] },
+          { model: User, as: "Followers", attributes: ["id"] },
+        ],
+      });
+      return res.status(200).json(fullUserWithoutPassword);
     });
   })(req, res, next);
 });
 
 router.post("/logout", (req, res) => {});
 
-router.patch();
+// router.patch();
 
-router.patch();
+// router.patch();
 
-router.delete();
+// router.delete();
 
 module.exports = router;
