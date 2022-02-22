@@ -23,6 +23,7 @@ passportConfig();
 app.use(
   cors({
     origin: "http://localhost:3060",
+    // 다른 도메인간 쿠키 공유
     credentials: true,
   })
 );
