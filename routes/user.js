@@ -8,7 +8,7 @@ const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 router.get("/", async (req, res, next) => {});
 
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", isNotLoggedIn, async (req, res, next) => {
   const { email, password, nickname } = req.body;
 
   try {
@@ -34,7 +34,7 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
-router.post("/login", (req, res, next) => {
+router.post("/login", isNotLoggedIn, (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       console.error(err);
