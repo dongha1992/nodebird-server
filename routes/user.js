@@ -7,7 +7,6 @@ const { User, Post } = require("../models");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 
 router.get("/", async (req, res, next) => {
-  console.log(req.user, "req.user");
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({

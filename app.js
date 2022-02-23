@@ -1,11 +1,13 @@
 const express = require("express");
 const postRouter = require("./routes/post");
 const userRouter = require("./routes/user");
+const postsRouter = require("./routes/posts");
 const app = express();
 const passportConfig = require("./passport");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
+const morgan = require("morgan");
 
 const db = require("./models");
 const cors = require("cors");
@@ -19,6 +21,8 @@ db.sequelize
 // });
 
 passportConfig();
+
+app.use(morgan("dev"));
 
 app.use(
   cors({
@@ -42,6 +46,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// router 순서 중요함
+app.use("/posts", postsRouter);
 app.use("/post", postRouter);
 app.use("/user", userRouter);
 

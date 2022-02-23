@@ -13,7 +13,6 @@ module.exports = () => {
         passwordField: "password",
       },
       async (email, password, done) => {
-        console.log(email, "11");
         try {
           const user = await User.findOne({
             where: { email },

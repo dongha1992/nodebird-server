@@ -58,7 +58,16 @@ router.post("/:postId/comment", isLoggedIn, async (req, res, next) => {
       UserId: req.user.id,
     });
 
-    res.status(201).json(comment);
+    const fullComment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "nickname"],
+        },
+      ],
+    });
+    res.status(201).json(fullComment);
   } catch (error) {
     console.error(error);
     next(error);
