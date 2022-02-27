@@ -16,10 +16,6 @@ db.sequelize
   .then(() => console.log("db 연결 성공"))
   .catch((err) => console.error(err));
 
-// app.get("/", (req, res) => {
-//   res.send("helloasd");
-// });
-
 passportConfig();
 
 app.use(morgan("dev"));
