@@ -25,18 +25,31 @@ const upload = multer({
       done(null, basename + "_" + new Date().getTime() + ext);
     },
   }),
-  limits: { fieldSize: 20 * 1024 * 1024 },
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
   try {
+    console.log(req.body, "@@@@@@@@@@");
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id,
     });
     if (req.body.image) {
       if (Array.isArray(req.body.image)) {
-        const images = await Promise.all();
+        const images = await Promise.all(
+          req.body.image.map((img) =>
+            Image.create({
+              src: img,
+            })
+          )
+        );
+        await post.addImages(images);
+      } else {
+        const image = await Image.create({
+          src: req.body.image,
+        });
+        await post.addImages(image);
       }
     }
     const fullPost = await Post.findOne({

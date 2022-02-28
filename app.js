@@ -8,6 +8,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const morgan = require("morgan");
+const path = require("path");
 
 const db = require("./models");
 const cors = require("cors");
@@ -27,6 +28,10 @@ app.use(
     credentials: true,
   })
 );
+
+// 프론트가 서버 uploads 폴더 접근할 수 있도록
+
+app.use("/", express.static(path.join(__dirname, "uploads")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
